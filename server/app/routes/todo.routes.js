@@ -13,7 +13,10 @@ module.exports = function (apiRoutes) {
   // 
   apiRoutes.param('todoId', todos.todo);
 
-  apiRoutes.get('/todos', todos.query);
+  // Server API Routes
+  apiRoutes.route('/todos')
+    .post(todos.create)
+    .get(todos.query);
 
   // Server API Routes
   apiRoutes.route('/todos/:todoId')

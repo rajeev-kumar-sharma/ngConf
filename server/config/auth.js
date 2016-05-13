@@ -19,9 +19,9 @@ module.exports = function (apiRoutes) {
 	// route middleware to authenticate and check token
 	// ---------------------------------------------------------
 	apiRoutes.use(function (req, res, next) {
-	
+					
 		// check header or url parameters or post parameters for token
-		var token = req.body.auth_token || req.param('auth_token') || req.param('id_token') || req.headers['x-access-token'] || (req.headers['Authorization'] && req.headers['Authorization'].split(' ')[0]);
+		var token = req.body.auth_token || req.param('auth_token') || req.param('id_token') || req.headers['x-access-token'] || (req.headers['authorization'] ? req.headers['authorization'].split(' ')[1] : '') || (req.headers['Authorization'] ? req.headers['Authorization'].split(' ')[1] : '');
 	
 		// decode token
 		if (token) {
