@@ -602,7 +602,7 @@ textarea.noresize { resize:none; }
 }
 
 .demo-full-width {
-  width: 100%;
+  width: 100% !important;
 }
 
 .md-checkbox-background {

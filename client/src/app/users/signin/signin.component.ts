@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/common';
+import { Http, Headers } from '@angular/http';
 import { Router, ROUTER_DIRECTIVES } from '@angular/router';
 import { MdInput } from '@angular2-material/input';
 import { MdButton } from '@angular2-material/button';
@@ -18,16 +19,30 @@ export /**
   class SigninComponent {
 
   user = {
-    userName: '',
+    email: '',
     password: ''
   }
 
-  constructor(private router: Router) {
-
+  headers: Headers = new Headers();
+  
+  constructor(private router: Router, private _http: Http) {
+    this.headers.append('Content-Type', 'application/json');
+  }
+  
+  setAuthToken(res: any) {
+    if (res.auth_token) {
+      localStorage.setItem('auth_token', res.auth_token);
+      localStorage.setItem('id_token', res.auth_token);
+    }
   }
 
-  onSubmit() {
-    console.log(this.user);
-    this.router.navigate(['/todos']);
-  }
+  onSubmit() {    
+    this._http.post('http://localhost:5000/api/authenticate', JSON.stringify(this.user), {headers: this.headers})
+      .subscribe(
+        res => this.setAuthToken(res.json()),
+        err => console.log(err),
+        () => this.router.navigate(['/todos'])        
+      )
+  }  
+  
 }

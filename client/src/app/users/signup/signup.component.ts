@@ -4,7 +4,7 @@ import { NgForm }    from '@angular/common';
 import { MdInput } from '@angular2-material/input';
 import { MdButton } from '@angular2-material/button';
 import { MdCheckbox } from '@angular2-material/checkbox';
-import { User } from './../user/user.model';
+import { User } from '../user/user.model';
 
 @Component({
   selector: `ngconf-register`,

@@ -1,0 +1,24 @@
+#alert {
+  z-index: 101;
+  position: fixed;
+  top: 2%;
+  margin: auto;
+  text-align: center;
+  padding: 1rem;
+  color: #fff;
+  width: 50%;
+  left: 0;
+  right:0;
+  min-width: 40rem;
+  max-width: 80rem;
+  font-size: 1.6rem;
+  border-radius: 2px;
+}
+
+.error {
+  background: #48c988;
+}
+
+.success {
+  background: #e41a2d;
+}

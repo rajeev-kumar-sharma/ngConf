@@ -16,26 +16,11 @@
             <ul class="list-bordered">
               <li>
               </li>
-              <!-- ngRepeat: filter in todoService.filters track by $index -->
-              <li ng-repeat="filter in todoService.filters track by $index" class="ng-scope">
-                <a href="" ng-click="todoService.filter(filter.method)" ng-class="{ 'is-active': $index == todoService.activeFilter }" class="mdl-color-text--indigo ng-binding is-active">
-                  <i class="material-icons m-r-5 f11">sort</i> All
+              <li *ngFor="let filter of filters; let i = index">
+                <a (click)="filterList(filter)" [ngClass]="{ 'is-active': i == activeFilter }" class="mdl-color-text--indigo">
+                  <i class="material-icons m-r-5 f11">sort</i> {{ filter.title }}
                 </a>
               </li>
-              <!-- end ngRepeat: filter in todoService.filters track by $index -->
-              <li ng-repeat="filter in todoService.filters track by $index" class="ng-scope">
-                <a href="" ng-click="todoService.filter(filter.method)" ng-class="{ 'is-active': $index == todoService.activeFilter }" class="mdl-color-text--indigo ng-binding">
-                  <i class="material-icons m-r-5 f11">sort</i> Active
-                </a>
-              </li>
-              <!-- end ngRepeat: filter in todoService.filters track by $index -->
-              <li ng-repeat="filter in todoService.filters track by $index" class="ng-scope">
-                <a href="" ng-click="todoService.filter(filter.method)" ng-class="{ 'is-active': $index == todoService.activeFilter }" class="mdl-color-text--indigo ng-binding">
-                  <i class="material-icons m-r-5 f11">sort</i> Completed
-                </a>
-              </li>
-              <!-- end ngRepeat: filter in todoService.filters track by $index -->
-
             </ul>
           </div>
         </div>
@@ -44,73 +29,39 @@
 
     <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone no-p-l">
       <div class="p-20 ml-card-holder ml-card-holder-first">
-        <div class="mdl-card mdl-shadow--1dp">
+        <div class="mdl-card mdl-shadow--1dp demo-full-width">
           <div class="mdl-card__title">
             <h2 class="mdl-card__title-text">Todo's</h2>
           </div>
           <div class="p-30">
 
-            <form ng-submit="todoService.saveTodo()" class="ng-pristine ng-valid">
-              <div class="mdl-textfield mdl-js-textfield is-upgraded" data-upgraded=",MaterialTextfield">
-                <input ml-todo-focus="focusTodoInput" class="mdl-textfield__input ng-pristine ng-untouched ng-valid" type="text" id="todo-title"
-                  ng-model="todoService.todo.title">
-                <label class="mdl-textfield__label" for="todo-title">Title</label>
-              </div>
+            <form (ngSubmit)="onSubmit()" #todoForm="ngForm">
+              
+              <md-input [(ngModel)]="todo.title" placeholder="Title" class="demo-full-width"></md-input>
 
-              <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect ng-binding"
-                data-upgraded=",MaterialButton,MaterialRipple">
-                Add
-              <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+              <button type="submit" md-raised-button color="primary">Add</button>
+              
             </form>
 
-            <ul class="list-unstyled m-t-20" ng-show="todos.length">
-              <!-- ngRepeat: todo in todos | filter:todoService.todoFilter track by $id($index) -->
-              <li ng-repeat="todo in todos | filter:todoService.todoFilter track by $id($index)" class="animate-repeat ng-scope">
-                <span ng-click="todoService.toggleDone(todo)">
+            <ul class="list-unstyled m-t-20" *ngIf="todos.length">
+              <li *ngFor="let item of (todos | filter:activeFilter)" class="animate-repeat">
+                <span (click)="toggleDone($event, item)" >
                   <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-upgraded=",MaterialButton">
-                    <i class="material-icons mdl-color-text--green" ng-class="{ 'mdl-color-text--green': todo.done }">done</i>
+                    <i class="material-icons mdl-color-text--green" [ngClass]="{ 'mdl-color-text--green': item.completed }">done</i>
                   </button>
-                  <span ng-class="{ strike: todo.done }" class="ng-binding strike">Grow my mailing list</span>
+                  <span [ngClass]="{ strike: item.completed }">{{item.title}}</span>
                 </span>
-                <button class="mdl-button mdl-js-button mdl-button--icon f-right" ng-click="todoService.editTodo(todo)" data-upgraded=",MaterialButton">
+                <button class="mdl-button mdl-js-button mdl-button--icon f-right" data-upgraded=",MaterialButton">
                   <i class="material-icons f15">edit</i>
                 </button>
               </li>
-              <!-- end ngRepeat: todo in todos | filter:todoService.todoFilter track by $id($index) -->
-              <li ng-repeat="todo in todos | filter:todoService.todoFilter track by $id($index)" class="animate-repeat ng-scope">
-                <span ng-click="todoService.toggleDone(todo)">
-                  <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-upgraded=",MaterialButton">
-                    <i class="material-icons" ng-class="{ 'mdl-color-text--green': todo.done }">done</i>
-                  </button>
-                  <span ng-class="{ strike: todo.done }" class="ng-binding">Create a killer SAAS business</span>
-                </span>
-                <button class="mdl-button mdl-js-button mdl-button--icon f-right" ng-click="todoService.editTodo(todo)" data-upgraded=",MaterialButton">
-                  <i class="material-icons f15">edit</i>
-                </button>
-              </li>
-              <!-- end ngRepeat: todo in todos | filter:todoService.todoFilter track by $id($index) -->
-              <li ng-repeat="todo in todos | filter:todoService.todoFilter track by $id($index)" class="animate-repeat ng-scope">
-                <span ng-click="todoService.toggleDone(todo)">
-                  <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" data-upgraded=",MaterialButton">
-                    <i class="material-icons" ng-class="{ 'mdl-color-text--green': todo.done }">done</i>
-                  </button>
-                  <span ng-class="{ strike: todo.done }" class="ng-binding">Write autoresponder sequence</span>
-                </span>
-                <button class="mdl-button mdl-js-button mdl-button--icon f-right" ng-click="todoService.editTodo(todo)" data-upgraded=",MaterialButton">
-                  <i class="material-icons f15">edit</i>
-                </button>
-              </li>
-              <!-- end ngRepeat: todo in todos | filter:todoService.todoFilter track by $id($index) -->
             </ul>
 
-            <div ng-show="!todos.length" class="ng-hide">
+            <div *ngIf="!todos.length">
               <p>Well done! No more todo's.</p>
             </div>
 
-            <button ng-click="todoService.clearCompleted()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-              data-upgraded=",MaterialButton,MaterialRipple">
-              Clear completed todo's
-            <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span></button>
+            <button type="submit" (click)="clearCompleted($event)" md-raised-button color="warn">CLEAR COMPLETED TODO'S</button>
 
           </div>
         </div>
