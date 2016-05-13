@@ -1,0 +1,17 @@
+{
+	"users": {
+		"_model": "User",
+		"admin": {
+			"displayName": "Rajeev Kumar Sharma",
+			"provider": "local",
+			"username": "rajeevsharma",
+			"roles": [
+				"admin"
+			],
+			"password": "Rajeev356!@",
+			"email": "rajeevsharma@outlook.in",
+			"lastName": "Kumar Sharma",
+			"firstName": "Rajeev"
+		}
+	}
+}

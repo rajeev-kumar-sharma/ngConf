@@ -1,0 +1,35 @@
+<div class="mdl-layout__container">
+  <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100 is-upgraded" data-upgraded=",MaterialLayout">
+    <div class="demo-ribbon mdl-color--grey"></div>
+    <main class="demo-main mdl-layout__content">
+      <h2 class="t-center mdl-color-text--white text-shadow">ngConf - Metacube</h2>
+      <a id="top"></a>
+      <div class="demo-container mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+        <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet">
+
+          <div class="mdl-card__title ">
+            <h2 class="mdl-card__title-text">
+            <i class="material-icons mdl-color-text--grey m-r-5 lh-13">account_circle</i>
+            Login
+          </h2>
+          </div>
+          <div class="p-l-20 p-r-20 p-b-20">
+            <form (ngSubmit)="onSubmit()" #signInForm="ngForm">
+
+              <md-input [(ngModel)]="user.userName" placeholder="Username" class="demo-full-width"></md-input>
+
+              <md-input [(ngModel)]="user.password" type="password" placeholder="Password" class="demo-full-width"></md-input>
+
+              <div class="m-t-20">
+                <button type="submit" md-raised-button color="primary">LOGIN</button>                
+                <a [routerLink]="['/signup']" md-button>REGISTER</a>
+              </div>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
